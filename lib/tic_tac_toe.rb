@@ -32,7 +32,18 @@ end
 def valid_move?(board, index)
   index.between?(0,8) && !position_taken?(board, index)
 end
-
+def turn(board)
+  puts "Please choose a number 1-9:"
+  user_input = gets.chomp
+  index = input_to_index(user_input)
+  if valid_move?(board, index)
+    player_token = current_player(board)
+    move(board, index, player_token)
+    display_board(board)
+  else
+    turn(board)
+  end
+end
 def turn_count(board)
   turn = 0
   board.each do |index|
@@ -53,18 +64,7 @@ def current_player(board)
   return player
 end
 
-def turn(board)
-  puts "Please choose a number 1-9:"
-  user_input = gets.chomp
-  index = input_to_index(user_input)
-  if valid_move?(board, index)
-    player_token = current_player(board)
-    move(board, index, player_token)
-    display_board(board)
-  else
-    turn(board)
-  end
-end
+
 
 def won?(board)
   WIN_COMBINATIONS.each {|win_combo|
